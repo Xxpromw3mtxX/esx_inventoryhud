@@ -158,15 +158,7 @@ RegisterNUICallback(
         end
 
         if not foundPlayers then
-            exports.pNotify:SendNotification(
-                {
-                    text = _U("players_nearby"),
-                    type = "error",
-                    timeout = 3000,
-                    layout = "bottomCenter",
-                    queue = "inventoryhud"
-                }
-            )
+            TriggerEvent('mythic_notify:client:SendAlert', {type = 'error', text = _U("players_nearby"), length = 2500})
         else
             SendNUIMessage(
                 {
@@ -241,15 +233,7 @@ RegisterNUICallback(
             Wait(250)
             loadPlayerInventory()
         else
-            exports.pNotify:SendNotification(
-                {
-                    text = _U("player_nearby"),
-                    type = "error",
-                    timeout = 3000,
-                    layout = "bottomCenter",
-                    queue = "inventoryhud"
-                }
-            )
+            TriggerEvent('mythic_notify:client:SendAlert', {type = 'error', text = _U("players_nearby"), length = 2500})
         end
         cb("ok")
     end
