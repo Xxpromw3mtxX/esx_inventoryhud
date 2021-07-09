@@ -100,41 +100,16 @@ AddEventHandler(
 
 			if amount > 0 then
 				if playerItem.limit ~= -1 and (playerItem.count + amount) > playerItem.limit then
-					TriggerClientEvent(
-						"pNotify:SendNotification",
-						_source,
-						{
-							text = _U("not_enough_space"),
-							type = "error",
-							timeout = 3000
-						}
-					)
+					TriggerEvent('mythic_notify:client:SendAlert', {type = 'error', text = _U("not_enough_space"), length = 2500})
 				else
 					local price = amount * item.price
 
 					if xPlayer.getMoney() >= price then
 						xPlayer.removeMoney(price)
 						xPlayer.addInventoryItem(item.name, amount)
-
-						TriggerClientEvent(
-							"pNotify:SendNotification",
-							_source,
-							{
-								text = _U("bought", amount, item.label, item.price),
-								type = "success",
-								timeout = 3000
-							}
-						)
+						TriggerEvent('mythic_notify:client:SendAlert', {type = 'success', text = _U("bought", amount, item.label, item.price), length = 2500})
 					else
-						TriggerClientEvent(
-							"pNotify:SendNotification",
-							_source,
-							{
-								text = _U("not_enough_money"),
-								type = "error",
-								timeout = 3000
-							}
-						)
+						TriggerEvent('mythic_notify:client:SendAlert', {type = 'error', text = _U("not_enough_money"), length = 2500})
 					end
 				end
 			end
@@ -143,37 +118,12 @@ AddEventHandler(
 				if not xPlayer.hasWeapon(item.name) then
 					xPlayer.removeMoney(item.price)
 					xPlayer.addWeapon(item.name, item.ammo)
-
-					TriggerClientEvent(
-						"pNotify:SendNotification",
-						_source,
-						{
-							text = _U("bought", 1, item.label, item.price),
-							type = "success",
-							timeout = 3000
-						}
-					)
+					TriggerEvent('mythic_notify:client:SendAlert', {type = 'success', text = _U("bought", 1, item.label, item.price), length = 2500})
 				else
-					TriggerClientEvent(
-						"pNotify:SendNotification",
-						_source,
-						{
-							text = _U("already_have_weapon"),
-							type = "error",
-							timeout = 3000
-						}
-					)
+					TriggerEvent('mythic_notify:client:SendAlert', {type = 'error', text = _U("already_have_weapon"), length = 2500})
 				end
 			else
-				TriggerClientEvent(
-					"pNotify:SendNotification",
-					_source,
-					{
-						text = _U("not_enough_money"),
-						type = "error",
-						timeout = 3000
-					}
-				)
+				TriggerEvent('mythic_notify:client:SendAlert', {type = 'error', text = _U("not_enough_money"), length = 2500})
 			end
 		end
 	end
