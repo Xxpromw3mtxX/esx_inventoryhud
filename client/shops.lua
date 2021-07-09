@@ -1,9 +1,7 @@
 local shopZone = nil
 
 RegisterNetEvent("esx_inventoryhud:openShop")
-AddEventHandler(
-    "esx_inventoryhud:openShop",
-    function(zone, items)
+AddEventHandler("esx_inventoryhud:openShop", function(zone, items)
         setShopData(zone, items)
         openShop()
     end
@@ -48,9 +46,7 @@ function openShop()
     SetNuiFocus(true, true)
 end
 
-RegisterNUICallback(
-    "BuyItem",
-    function(data, cb)
+RegisterNUICallback("BuyItem", function(data, cb)
         if type(data.number) == "number" and math.floor(data.number) == data.number then
             local count = tonumber(data.number)
 
