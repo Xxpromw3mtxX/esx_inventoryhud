@@ -52,53 +52,19 @@ AddEventHandler(
         local xPlayer = ESX.GetPlayerFromId(_source)
 
         if type == "item_standard" then
-            local sourceItem = xPlayer.getInventoryItem(item)
 
-            TriggerEvent(
-                "esx_addoninventory:getSharedInventory",
-                storage,
-                function(inventory)
+            TriggerEvent("esx_addoninventory:getSharedInventory", storage, function(inventory)
                     local inventoryItem = inventory.getItem(item)
 
                     -- is there enough in the property?
                     if count > 0 and inventoryItem.count >= count then
-                        -- can the player carry the said amount of x item?
-                        if sourceItem.limit ~= -1 and (sourceItem.count + count) > sourceItem.limit then
-                            TriggerClientEvent(
-                                "pNotify:SendNotification",
-                                _source,
-                                {
-                                    text = _U("not_enough_space"),
-                                    type = "error",
-                                    timeout = 3000
-                                }
-                            )
-                        else
-                            inventory.removeItem(item, count)
-                            xPlayer.addInventoryItem(item, count)
+                        inventory.removeItem(item, count)
+                        xPlayer.addInventoryItem(item, count)
 
-                            TriggerEvent("esx_adminmenu:logSociety", storage, GetPlayerIdentifiers(_source), xPlayer, "TAKE", inventoryItem.label, count, inventoryItem.count - count)
-
-                            TriggerClientEvent(
-                                "pNotify:SendNotification",
-                                _source,
-                                {
-                                    text = _U("took_from_storage", count, inventoryItem.label),
-                                    type = "success",
-                                    timeout = 3000
-                                }
-                            )
-                        end
+                        TriggerEvent("esx_adminmenu:logSociety", storage, GetPlayerIdentifiers(_source), xPlayer, "TAKE", inventoryItem.label, count, inventoryItem.count - count)
+                        TriggerEvent('mythic_notify:client:SendAlert', {type = 'success', text = _U("took_from_storage", count, inventoryItem.label), length = 2500})
                     else
-                        TriggerClientEvent(
-                            "pNotify:SendNotification",
-                            _source,
-                            {
-                                text = _U("took_not_enough"),
-                                type = "error",
-                                timeout = 3000
-                            }
-                        )
+                        TriggerEvent('mythic_notify:client:SendAlert', {type = 'error', text = _U("took_not_enough"), length = 2500})
                     end
                 end
             )
@@ -115,15 +81,7 @@ AddEventHandler(
 
                         TriggerEvent("esx_adminmenu:logSociety", storage, GetPlayerIdentifiers(_source), xPlayer, "TAKE", "Špinavé prachy", count, roomAccountMoney)
                     else
-                        TriggerClientEvent(
-                            "pNotify:SendNotification",
-                            xPlayer.source,
-                            {
-                                text = _U("bad_amount"),
-                                type = "error",
-                                timeout = 3000
-                            }
-                        )
+                        TriggerEvent('mythic_notify:client:SendAlert', {type = 'error', text = _U("bad_amount"), length = 2500})
                     end
                 end
             )
@@ -185,28 +143,11 @@ AddEventHandler(
 
                         local inventoryItem = inventory.getItem(item)
                         TriggerEvent("esx_adminmenu:logSociety", storage, GetPlayerIdentifiers(_source), xPlayer, "PUT", inventoryItem.label, count, inventoryItem.count)
-
-                        TriggerClientEvent(
-                            "pNotify:SendNotification",
-                            _source,
-                            {
-                                text = _U("put_into_storage", count, inventoryItem.label),
-                                type = "success",
-                                timeout = 3000
-                            }
-                        )
+                        TriggerEvent('mythic_notify:client:SendAlert', {type = 'success', text = _U("put_into_storage", count, inventoryItem.label), length = 2500})
                     end
                 )
             else
-                TriggerClientEvent(
-                    "pNotify:SendNotification",
-                    xPlayer.source,
-                    {
-                        text = _U("bad_amount"),
-                        type = "error",
-                        timeout = 3000
-                    }
-                )
+                TriggerEvent('mythic_notify:client:SendAlert', {type = 'error', text = _U("bad_amount"), length = 2500})
             end
         elseif type == "item_account" then
             local playerAccountMoney = xPlayer.getAccount(item).money
@@ -224,15 +165,7 @@ AddEventHandler(
                     end
                 )
             else
-                TriggerClientEvent(
-                    "pNotify:SendNotification",
-                    xPlayer.source,
-                    {
-                        text = _U("bad_amount"),
-                        type = "error",
-                        timeout = 3000
-                    }
-                )
+                TriggerEvent('mythic_notify:client:SendAlert', {type = 'error', text = _U("bad_amount"), length = 2500})
             end
         elseif type == "item_weapon" then
             TriggerEvent(
