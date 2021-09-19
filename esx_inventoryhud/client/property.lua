@@ -8,6 +8,8 @@ AddEventHandler("esx_inventoryhud:openPropertyInventory", function(data, playerS
     if playerMotel then isMotel = playerMotel; else isMotel = false; end
     if allHousing then isHousing = allHousing; else isHousing = false; end
     setPropertyInventoryData(data)
+    TriggerEvent("InteractSound_CL:PlayOnOne", "StashOpen", 0.8)
+    animation()
     openPropertyInventory()
 end)
 
