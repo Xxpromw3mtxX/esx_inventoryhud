@@ -2,15 +2,14 @@ local lastStorage = nil
 
 RegisterNetEvent("esx_inventoryhud:openStorageInventory")
 AddEventHandler("esx_inventoryhud:openStorageInventory", function(storage)
-        lastStorage = storage
+    lastStorage = storage
 
-        ESX.TriggerServerCallback("esx_inventoryhud:getStorageInventory", function(storageData)
-                setStorageInventoryData(storageData)
-                openStorageInventory()
-            end, storage
-        )
-    end
-)
+    ESX.TriggerServerCallback("esx_inventoryhud:getStorageInventory", function(storageData)
+        setStorageInventoryData(storageData)
+        animation()
+        openStorageInventory()
+    end, storage)
+end)
 
 function refreshStorageInventory()
     ESX.TriggerServerCallback("esx_inventoryhud:getStorageInventory", function(storageData)

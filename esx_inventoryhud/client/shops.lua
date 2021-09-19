@@ -3,6 +3,7 @@ local shopZone = nil
 RegisterNetEvent("esx_inventoryhud:openShop")
 AddEventHandler("esx_inventoryhud:openShop", function(zone, items)
         setShopData(zone, items)
+        animation()
         openShop()
     end
 )
